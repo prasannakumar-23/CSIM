@@ -1,24 +1,27 @@
 const express = require('express');
 const app = express();
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors=require("cors");
 
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+const adminLoginRoute = require("./routes/adminLogin.js");
+const adminSignupRoute = require("./routes/adminSignup.js");
 
-let messagejson = {message: 'Hello World'};
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/message', (req, res) => {
-    res.send(messagejson)
-});
+mongoose
+   .connect('mongodb+srv://user:1234@csimcluster.fw8ljl0.mongodb.net/?retryWrites=true&w=majority')
+   .then(() => {
+     console.log("Connection Successful");
+   })
+   .catch((e) => {
+     console.log(e);
+   });
 
-app.post('/login', (req, res) => {
-    response = {
-       username:req.body.username,
-       password3:req.body.password
-    };
-    console.log(response);
-    res.send(JSON.stringify(response));
-});
+app.use("/admin/login", adminLoginRoute);
+app.use("/admin/signup", adminSignupRoute);
 
 app.listen(3000, () => {
     console.log("server running...");

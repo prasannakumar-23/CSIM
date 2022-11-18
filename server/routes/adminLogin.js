@@ -1,4 +1,4 @@
-const coldStorageAdmin = require("../models/alumni/alumniAdmin.js");
+const coldStorageAdmin = require("../models/coldstorage.js");
 const router=require("express").Router();
 const bcrypt = require('bcrypt');
 
@@ -9,7 +9,7 @@ const cors=require("cors");
 
 
 router.use(cors({
-    origin:["http://localhost:3000/alumni_portal/*"],
+    origin:["http://localhost:3000/admin/*"],
     methods:["GET","POST"],
     credentials: true,
 }))
@@ -44,7 +44,7 @@ router.get("/",(req,res)=>{
 router.post("/",async (req,res)=>{
     const email=req.body.email;
     const password=req.body.password;
-    alumniusers.find({email:email},(err,result)=>{
+    coldstorageowner.find({email:email},(err,result)=>{
     console.log(result);
     console.log(err);
     if(result.length>0){
@@ -54,7 +54,7 @@ router.post("/",async (req,res)=>{
 
                 ////////consoles
                 console.log(req.session.user);
-                console.log("hello" + result[0].email);
+                console.log("hello " + result[0].email);
                 console.log(result);
                 ///////////
 
