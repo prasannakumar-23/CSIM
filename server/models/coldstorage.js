@@ -24,10 +24,6 @@ const AdminSchema= mongoose.Schema({
         required: true,
         unique: true
     },
-    gender:{
-        type: String,
-        required:true
-    },
     password:{
         type: String,
         required:true
