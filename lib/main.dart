@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             Builder(builder: (context) {
              return ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthScreen.routeName)
+                    //Navigator.pushNamed(context, AuthScreen.routeName)
                   },
                   child: Text('Click'),);
           
