@@ -1,25 +1,31 @@
 const express = require('express');
+const mongoose = require("mongoose");
 const app = express();
+
+
+const authRouter = require("./routes/auth");
+
 
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-let messagejson = {message: 'Hello World'};
+const PORT = process.env.PORT || 3000;
+const DB =
+  "";
+
 app.use(express.json());
+app.use(authRouter);
 
-app.get('/message', (req, res) => {
-    res.send(messagejson)
-});
+// Connections
+mongoose
+  .connect(DB)
+  .then(() => {
+    console.log("Connection Successful");
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 
-app.post('/login', (req, res) => {
-    response = {
-       username:req.body.username,
-       password3:req.body.password
-    };
-    console.log(response);
-    res.send(JSON.stringify(response));
-});
-
-app.listen(3000, () => {
-    console.log("server running...");
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`connected at port ${PORT}`);
 });
