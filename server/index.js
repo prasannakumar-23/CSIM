@@ -6,6 +6,7 @@ const cors=require("cors");
 
 const adminLoginRoute = require("./routes/adminLogin.js");
 const adminSignupRoute = require("./routes/adminSignup.js");
+const fetchColdStoragesRoute = require("./routes/getColdstorageDetails.js");
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -21,25 +22,9 @@ mongoose
    });
 
 app.use("/admin/login", adminLoginRoute);
-//app.use("/admin/signup", adminSignupRoute);
+app.use("/admin/signup", adminSignupRoute);
+app.use("/fetchcoldstorages", fetchColdStoragesRoute);
 
-app.post("/admin/signup",async(req,res)=>{
-        try{
-            const salt=await bcrypt.genSalt(10);
-            console.log("hello");
-            const hashedPass=await bcrypt.hash(req.body.password,salt);
-            req.body.password = hashedPass;
-            const newUser = new User(req.body);
-            const user = await newUser.save();
-            res.status(200);
-            console.log(user);
-            res.send(user);
-        }catch(err){
-            res.status(500);
-            res.send("err");
-        }
-        }
-    );
 
 app.listen(3000, () => {
     console.log("server running...");

@@ -26,7 +26,7 @@ router.use(
     })
 );
 
-router.get("/",(req,res)=>{
+router.get("/", async(req,res)=>{
     if(req.session.user){
         console.log(req.session);
         const response={loggedIn: true,user: req.session.user}
@@ -44,7 +44,7 @@ router.get("/",(req,res)=>{
 router.post("/",async (req,res)=>{
     const email=req.body.email;
     const password=req.body.password;
-    coldstorageowner.find({email:email},(err,result)=>{
+    coldStorageAdmin.find({email:email},(err,result)=>{
     console.log(result);
     console.log(err);
     if(result.length>0){
